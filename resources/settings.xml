@@ -3,7 +3,6 @@
     <category label="General">
     <setting id="ipaddress" type="text" label="30000" default="127.0.0.1"/>
     <setting id="port" type="text" label="30002" default="80"/>
-    <setting id="streaming" type="enum" label="30001" lvalues="30011|30012|30013" default="30011"/>
     </category>
     
     <category label="Authentication" >
