@@ -304,6 +304,11 @@ def Movies(url):
                
         help=json.loads(html)
         results=help['result']
+        print str(results)
+        if results['total'] == 0:
+            xbmcgui.Dialog().ok("Error","No library entries found")
+            return
+            
         movieTags=results['movies']
                    
         #Find all the video tags, as they contain the data we need to link to a file.
@@ -377,7 +382,6 @@ def SHOWS(url=''):
 
         #Get the URL and server name.  Get the XML and parse
         server=url.split('/')[2]
-        print server
 
         string=json.dumps({"method":"VideoLibrary.GetTVShows","id":"1","jsonrpc":"2.0", "params":{"fields":["title","episode","fanart","file","genre","imdbnumber","lastplayed","mpaa","playcount","plot","premiered","rating","studio","thumbnail","votes","year"]}})
 
@@ -387,10 +391,13 @@ def SHOWS(url=''):
             return
 
         help=json.loads(html)
-        print help
         results=help['result']
+        if results['total'] == 0:
+            xbmcgui.Dialog().ok("Error","No library entries found")
+            return
+
         ShowTags=results['tvshows']
-        
+            
         #For each directory tag we find
         for show in ShowTags:
 
@@ -448,8 +455,12 @@ def Seasons(url,id):
             return
 
         help=json.loads(html)
-        print help
         results=help['result']
+        if results['total'] == 0:
+            xbmcgui.Dialog().ok("Error","No library entries found")
+            return
+            
+
         ShowTags=results['seasons']
         for show in ShowTags:
         
@@ -502,8 +513,6 @@ def EPISODES(url,id):
        
         #Get the server
         server=url.split('/')[2]
-        print server
-        print id
         string=json.dumps({"method":"VideoLibrary.GetEpisodes","id":"1","jsonrpc":"2.0", "params": {"tvshowid":int(tvid), "season":int(seasonid), "fields":["cast","director","episode","fanart","file","firstaired","lastplayed","originaltitle","playcount","plot","productioncode","rating","runtime","season","showtitle","streamDetails","thumbnail","title","votes","writingcredits"]}}) 
 
         html=getURL(url, type="POST", urlData=string )
@@ -512,8 +521,12 @@ def EPISODES(url,id):
             return
 
         help=json.loads(html)
-        print help
         results=help['result']
+        if results['total'] == 0:
+            xbmcgui.Dialog().ok("Error","No library entries found")
+            return
+            
+        
         ShowTags=results['episodes']
         
         for show in ShowTags:
