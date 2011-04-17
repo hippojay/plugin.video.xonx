@@ -305,9 +305,14 @@ def Movies(url):
         help=json.loads(html)
         results=help['result']
         print str(results)
-        if results['total'] == 0:
-            xbmcgui.Dialog().ok("Error","No library entries found")
-            return
+        try:
+            if results['limits']['total'] == 0:
+                xbmcgui.Dialog().ok("Error","No library entries found")
+                return
+        except:
+            if results['total'] == 0:
+                xbmcgui.Dialog().ok("Error","No library entries found")
+                return
             
         movieTags=results['movies']
                    
@@ -392,9 +397,14 @@ def SHOWS(url=''):
 
         help=json.loads(html)
         results=help['result']
-        if results['total'] == 0:
-            xbmcgui.Dialog().ok("Error","No library entries found")
-            return
+        try:
+            if results['limits']['total'] == 0:
+                xbmcgui.Dialog().ok("Error","No library entries found")
+                return
+        except:
+            if results['total'] == 0:
+                xbmcgui.Dialog().ok("Error","No library entries found")
+                return
 
         ShowTags=results['tvshows']
             
