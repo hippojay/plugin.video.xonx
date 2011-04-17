@@ -348,6 +348,13 @@ def Movies(url):
 
             arguments['fanart_image']=art_url
             
+            try:
+                protocol=properties['file'].split(':')[0]
+                printDebug ("Protocol for media is " + protocol, Movies.__name__)
+                if len(protocol) <= 2:
+                    properties['file']="http://"+server+"/vfs/"+urllib.quote_plus(properties['file'])
+                    printDebug ("local file detected, setting to VFS location: " + properties['file'], Movies.__name__)
+            except: pass
             #Set type
             arguments['type']="Video"
             
@@ -571,6 +578,14 @@ def EPISODES(url,id):
                 art_url=""
 
             arguments['fanart_image']=art_url
+
+            try:
+                protocol=properties['file'].split(':')[0]
+                printDebug ("Protocol for media is " + protocol, Movies.__name__)
+                if len(protocol) <= 2:
+                    properties['file']="http://"+server+"/vfs/"+urllib.quote_plus(properties['file'])
+                    printDebug ("local file detected, setting to VFS location: " + properties['file'], Movies.__name__)
+            except: pass
 
 
             #Set type
