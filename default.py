@@ -347,7 +347,10 @@ def Movies(url):
                 art_url=""
 
             arguments['fanart_image']=art_url
-            
+
+            #Ensure that the file name is encoded too...
+            properties['file']=properties['file'].encode('utf-8')
+
             try:
                 protocol=properties['file'].split(':')[0]
                 printDebug ("Protocol for media is " + protocol, Movies.__name__)
@@ -578,6 +581,9 @@ def EPISODES(url,id):
                 art_url=""
 
             arguments['fanart_image']=art_url
+
+            #Ensure that the file name is encoded too...
+            properties['file']=properties['file'].encode('utf-8')
 
             try:
                 protocol=properties['file'].split(':')[0]
