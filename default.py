@@ -421,7 +421,7 @@ def SHOWS(url=''):
         #For each directory tag we find
         for show in ShowTags:
 
-            properties=convert(dict(show.items()))
+            properties=dict(show.items())
             arguments={}
             
             #Get the picture to use
@@ -476,9 +476,14 @@ def Seasons(url,id):
 
         help=json.loads(html)
         results=help['result']
-        if results['total'] == 0:
-            xbmcgui.Dialog().ok("Error","No library entries found")
-            return
+        try:
+            if results['limits']['total'] == 0:
+                xbmcgui.Dialog().ok("Error","No library entries found")
+                return
+        except:
+            if results['total'] == 0:
+                xbmcgui.Dialog().ok("Error","No library entries found")
+                return
             
 
         ShowTags=results['seasons']
@@ -542,9 +547,14 @@ def EPISODES(url,id):
 
         help=json.loads(html)
         results=help['result']
-        if results['total'] == 0:
-            xbmcgui.Dialog().ok("Error","No library entries found")
-            return
+        try:
+            if results['limits']['total'] == 0:
+                xbmcgui.Dialog().ok("Error","No library entries found")
+                return
+        except:
+            if results['total'] == 0:
+                xbmcgui.Dialog().ok("Error","No library entries found")
+                return
             
         
         ShowTags=results['episodes']
@@ -581,9 +591,6 @@ def EPISODES(url,id):
                 art_url=""
 
             arguments['fanart_image']=art_url
-
-            #Ensure that the file name is encoded too...
-            properties['file']=properties['file'].encode('utf-8')
 
             try:
                 protocol=properties['file'].split(':')[0]
