@@ -1,5 +1,5 @@
 import urllib,urllib2,re,xbmcplugin,xbmcgui,xbmcaddon, httplib, socket
-import sys,os,datetime, time
+import sys,os,datetime, time, string, base64
 
 __settings__ = xbmcaddon.Addon(id='plugin.video.xonx')
 __cwd__ = __settings__.getAddonInfo('path')
@@ -60,6 +60,9 @@ if g_authentication == "true":
     g_password =  __settings__.getSetting('password')
     if g_debug == "true": print "xonx -> username is " + g_username
     
+    auth = 'Basic ' + string.strip(base64.encodestring(g_username + ':' + g_password))
+    g_txheaders['Authorization']=auth
+    XBMCInternalHeaders="|Authorization="+urllib.quote_plus(g_txheaders['Authorization'])
 
 
 
@@ -620,7 +623,12 @@ def EPISODES(url,id):
 def PLAY(vids):
         printDebug("== ENTER: PLAY ==")
         #This is for playing standard non-PMS library files (such as Plugins)
-        url = vids+XBMCInternalHeaders
+        protocol=vids.split(':')[0]
+        printDebug ("Protocol for media is " + protocol, PLAY.__name__)
+        if len(protocol) <= 2:
+            url = vids+XBMCInternalHeaders
+        else:
+            url=vids
         item = xbmcgui.ListItem(path=url)
         return xbmcplugin.setResolvedUrl(pluginhandle, True, item)
         
