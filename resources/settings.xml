@@ -14,16 +14,17 @@
     
     <category label="Server List" >
         <setting id="multiple" type=enum lvalues="30016|30017|30018|30019|30020|30021|30022|30023|30024|30025|30026" label="Number of Extra Servers" default="30016" />
-        <setting id="server1" type=text label="Server 1" visible="gt(-1,0)" enable="gt(-1,0)" default="" />
-        <setting id="server2" type=text label="Server 2" visible="gt(-2,1)" enable="gt(-2,1)" default="" />
-        <setting id="server3" type=text label="Server 3" visible="gt(-3,2)" enable="gt(-3,2)" default="" />
-        <setting id="server4" type=text label="Server 4" visible="gt(-4,3)" enable="gt(-4,3)" default="" />
-        <setting id="server5" type=text label="Server 5" visible="gt(-5,4)" enable="gt(-5,4)" default="" />
-        <setting id="server6" type=text label="Server 6" visible="gt(-6,5)" enable="gt(-6,5)" default="" />
-        <setting id="server7" type=text label="Server 7" visible="gt(-7,6)" enable="gt(-7,6)" default="" />
-        <setting id="server8" type=text label="Server 8" visible="gt(-8,7)" enable="gt(-8,7)" default="" />
-        <setting id="server9" type=text label="Server 9" visible="gt(-9,8)" enable="gt(-9,8)" default="" />
-        <setting id="server10" type=text label="Server 10" visible="gt(-10,9)" enable="gt(-10,9)" default="" />
+        <setting type=lsep label="Server should be added as <server>:<port>." visible="gt(-1,0)"/>
+        <setting id="server1" type=text label="Server 1" visible="gt(-2,0)" enable="gt(-2,0)" default="" />
+        <setting id="server2" type=text label="Server 2" visible="gt(-3,1)" enable="gt(-3,1)" default="" />
+        <setting id="server3" type=text label="Server 3" visible="gt(-4,2)" enable="gt(-4,2)" default="" />
+        <setting id="server4" type=text label="Server 4" visible="gt(-5,3)" enable="gt(-5,3)" default="" />
+        <setting id="server5" type=text label="Server 5" visible="gt(-6,4)" enable="gt(-6,4)" default="" />
+        <setting id="server6" type=text label="Server 6" visible="gt(-7,5)" enable="gt(-7,5)" default="" />
+        <setting id="server7" type=text label="Server 7" visible="gt(-8,6)" enable="gt(-8,6)" default="" />
+        <setting id="server8" type=text label="Server 8" visible="gt(-9,7)" enable="gt(-9,7)" default="" />
+        <setting id="server9" type=text label="Server 9" visible="gt(-10,8)" enable="gt(-10,8)" default="" />
+        <setting id="server10" type=text label="Server 10" visible="gt(-11,9)" enable="gt(-11,9)" default="" />
     </category>
     
     <category label="Debug" >

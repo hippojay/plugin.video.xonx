@@ -1,5 +1,5 @@
 import urllib,urllib2,re,xbmcplugin,xbmcgui,xbmcaddon, httplib, socket
-import sys,os,datetime, time, string, base64
+import sys,os,datetime, time, string, base64, cProfile
 
 __settings__ = xbmcaddon.Addon(id='plugin.video.xonx')
 __cwd__ = __settings__.getAddonInfo('path')
@@ -36,7 +36,13 @@ if g_multiple > 0:
         if extraip == "":
             if g_debug == "true": print "xonx -> Blank server detected.  Ignoring"
             continue
-        g_serverList.append(['Server '+str(i),extraip])
+        try:
+            (serverip, port)=extraip.split(':')
+        except:
+            serverip=extraip
+            port="80"
+            
+        g_serverList.append(['Server '+str(i),serverip, port])
 
 if g_debug == "true": print "xonx -> serverList is " + str(g_serverList)
         
@@ -162,8 +168,6 @@ def addLink(url,properties,arguments):
                 
         #Set the fanart image if it has been enabled
         try:
-            if len(arguments['fanart_image'].split('/')[-1].split('.')) < 2:
-                arguments['fanart_image']=str(arguments['fanart_image']+"/image.jpg")
             liz.setProperty('fanart_image', str(arguments['fanart_image']+XBMCInternalHeaders))
             printDebug( "Setting fan art as " + str(arguments['fanart_image']),addLink.__name__)
         except: pass
@@ -219,8 +223,6 @@ def addDir(url,properties,arguments):
         
         #Set the fanart image if it has been enabled
         try:
-            if len(arguments['fanart_image'].split('/')[-1].split('.')) < 2:
-                arguments['fanart_image']=str(arguments['fanart_image']+"/image.jpg") 
             liz.setProperty('fanart_image', str(arguments['fanart_image']+XBMCInternalHeaders))
             printDebug( "Setting fan art as " + str(arguments['fanart_image']),addDir.__name__)
         except: pass
@@ -241,7 +243,7 @@ def ROOT():
         Servers=[]
       
         #If we have a remote host, then don;t do local discovery as it won't work
-        Servers.append(["Main",g_host])
+        Servers.append(["Main",g_host, g_port])
         Servers += g_serverList
         #For each of the servers we have identified
         for server in Servers:
@@ -261,7 +263,7 @@ def ROOT():
                 
             arguments['type']="Video"
             mode=2    
-            s_url='http://'+server[1]+':'+g_port+"/jsonrpc&mode="+str(mode)                
+            s_url='http://'+server[1]+':'+server[2]+"/jsonrpc&mode="+str(mode)                
             
             #Build that movies listing..
             addDir(s_url, properties,arguments)
@@ -278,7 +280,7 @@ def ROOT():
             arguments['type']="Video"
 
             mode=1
-            s_url='http://'+server[1]+':'+g_port+"/jsonrpc&mode="+str(mode)
+            s_url='http://'+server[1]+':'+server[2]+"/jsonrpc&mode="+str(mode)
                 
             #Build that movies listing..
             addDir(s_url, properties,arguments)
