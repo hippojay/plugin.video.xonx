@@ -627,10 +627,7 @@ def PLAY(vids):
         #This is for playing standard non-PMS library files (such as Plugins)
         protocol=vids.split(':')[0]
         printDebug ("Protocol for media is " + protocol, PLAY.__name__)
-        if len(protocol) <= 2:
-            url = vids+XBMCInternalHeaders
-        else:
-            url=vids
+        url = vids+XBMCInternalHeaders
         item = xbmcgui.ListItem(path=url)
         return xbmcplugin.setResolvedUrl(pluginhandle, True, item)
         
